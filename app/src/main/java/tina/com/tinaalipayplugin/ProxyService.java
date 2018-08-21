@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-
 import java.lang.reflect.Constructor;
 
 import tina.com.pluginstand.PayInterfaceService;
@@ -15,8 +14,10 @@ import tina.com.pluginstand.PayInterfaceService;
  * Created by Administrator on 2018/3/28.
  */
 
-public class ProxyService extends  Service{
+public class ProxyService extends Service {
+
     String serviceName;
+
     PayInterfaceService payInterfaceService;
 
     @Nullable
@@ -30,10 +31,10 @@ public class ProxyService extends  Service{
         serviceName = intent.getStringExtra("serviceName");
 //        class
         try {
-            Class loadClass= PluginManager.getInstance().getDexClassLoader().loadClass(serviceName);
+            Class loadClass = PluginManager.getInstance().getDexClassLoader().loadClass(serviceName);
 
-            Constructor<?> localConstructor =loadClass.getConstructor(new Class[] {});
-            Object instance = localConstructor.newInstance(new Object[] {});
+            Constructor<?> localConstructor = loadClass.getConstructor(new Class[]{});
+            Object instance = localConstructor.newInstance(new Object[]{});
 //            OneService
             payInterfaceService = (PayInterfaceService) instance;
             payInterfaceService.attach(this);
